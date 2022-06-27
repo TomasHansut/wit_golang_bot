@@ -47,17 +47,17 @@ func main() {
 				Query: query,
 			})
 
-			// Format json
+			// Format json and get value from WIT AI
 			data, _ := json.MarshalIndent(msg, "", "     ")
 			rough := string(data[:])
 			value := gjson.Get(rough, "entities.wit$wolfram_search_query:wolfram_search_query.0.value")
 			answer := value.String()
-			// Get response
+			// Get response from wolfram
 			res, err := wolframClient.GetSpokentAnswerQuery(answer, wolfram.Metric, 1000)
 			if err != nil {
 				fmt.Println("there is an error")
 			}
-			fmt.Println(value)
+			// Send response from wolfram to slack
 			response.Reply(res)
 		},
 	})
