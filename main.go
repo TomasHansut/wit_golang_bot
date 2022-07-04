@@ -35,6 +35,7 @@ func main() {
 	// Build wolfram client
 	wolframClient := &wolfram.Client{AppID: os.Getenv("WOLFRAM_APP_ID")}
 
+	// A "go" statement starts the execution of a function call as an independent concurrent thread of control, or goroutine, within the same address space.
 	go printCommandEvents(bot.CommandEvents())
 	// Define bot command
 	bot.Command("query for bot - <message>", &slacker.CommandDefinition{
@@ -62,9 +63,11 @@ func main() {
 		},
 	})
 
+	// Release recources
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
+	// Listen for errors
 	err := bot.Listen(ctx)
 
 	if err != nil {
